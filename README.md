@@ -10,7 +10,7 @@ This is a powerful Python script designed to losslessly restore a complete, orig
 
 ## ✨ 功能特性 (Features)
 
--   **无损拼接 (Lossless Restoration)**: 通过像素级替换，100% 还原原始图像的每一个细节，无任何质量损失。
+-  **无（有）损拼接 (Lossy Restoration)**: 通过像素级替换，~~100% 还原原始图像的每一个细节，无任何质量损失。~~
 -   **鲁棒性强 (Highly Robust)**:
     -   **处理混合背景**: 能够正确处理背景为纯黑 (`#000000`) 或纯白 (`#FFFFFF`) 的混合切片。
     -   **自动模式转换**: 自动将不同模式（如 `P` 模式/调色板模式）的图片统一转换为 `RGB` 模式进行处理。
