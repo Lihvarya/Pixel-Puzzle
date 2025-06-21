@@ -4,9 +4,9 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
-一个功能强大的 Python 脚本，用于将一个目录下的多个图像“切片”或“碎片”无损地拼接还原成完整的原始图像。该脚本具有极高的鲁棒性，能够自动处理多种常见问题，并提供图像增强选项。
+一个功能强大的 Python 脚本，用于将一个目录下的多个图像“切片”或“碎片”~~无损地~~拼接还原成完整的原始图像。该脚本具有极高的鲁棒性，能够自动处理多种常见问题，并提供图像增强选项。
 
-This is a powerful Python script designed to losslessly restore a complete, original image from a directory of image "slices" or "fragments." The script is highly robust, automatically handling a variety of common issues and providing options for post-enhancement.
+This is a powerful Python script designed to lossy restore a complete, original image from a directory of image "slices" or "fragments." The script is highly robust, automatically handling a variety of common issues and providing options for post-enhancement.
 
 ## ✨ 功能特性 (Features)
 
@@ -16,7 +16,7 @@ This is a powerful Python script designed to losslessly restore a complete, orig
     -   **自动模式转换**: 自动将不同模式（如 `P` 模式/调色板模式）的图片统一转换为 `RGB` 模式进行处理。
     -   **自动尺寸校正**: 能够自动处理有 1-2 像素微小尺寸差异的图片，将其高质量地调整为基准尺寸，而不会跳过。
 -   **多种输出 (Multiple Outputs)**: 一次运行，生成三个有用的图像版本：
-    1.  **还原图 (`_restored.png`)**: 完美拼接的原始图像。
+    1.  **还原图 (`_restored.png`)**: ~~完美~~拼接的原始图像。
     2.  **反色图 (`_inverted.png`)**: 还原图的反色版本。
     3.  **增强图 (`_enhanced.png`)**: 对还原图进行锐化和对比度增强，使其在视觉上更清晰。
 -   **易于配置 (Easy to Configure)**: 增强效果（锐化度、对比度等）的参数可以在脚本中轻松调整。
@@ -85,7 +85,7 @@ This is a powerful Python script designed to losslessly restore a complete, orig
 
 脚本运行成功后，您将在项目根目录下看到生成的新文件：
 
--   `image_restored.png`: 无损还原的原始图像。
+-   `image_restored.png`: ~~无损~~还原的原始图像。
 -   `image_inverted.png`: 原图的反色版本。
 -   `image_enhanced.png`: 经过锐化和对比度增强的版本，视觉上更清晰。
 
