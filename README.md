@@ -1,7 +1,7 @@
 # Image Slice Restorer & Enhancer (图像切片还原与增强工具)
 
 [![Python Version](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://www.python.org/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 
 一个功能强大的 Python 脚本，用于将一个目录下的多个图像“切片”或“碎片”无损地拼接还原成完整的原始图像。该脚本具有极高的鲁棒性，能够自动处理多种常见问题，并提供图像增强选项。
