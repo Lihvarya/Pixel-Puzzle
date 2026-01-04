@@ -40,24 +40,19 @@
 ### 1. 环境要求
 确保您的系统中已安装 Python 3.8 或更高版本。
 
-### 2. 克隆项目
-```bash
-git clone https://github.com/your-username/image-splitter-tool.git
-cd image-splitter-tool
-```
 
-### 3. 安装依赖
+### 2. 安装依赖
 本项目主要依赖 Flask 和 Pillow。
 ```bash
 pip install flask pillow
 ```
 
-### 4. 运行应用
+### 3. 运行应用
 ```bash
 python app.py
 ```
 
-### 5. 访问工具
+### 4. 访问工具
 打开浏览器并访问：
 `http://127.0.0.1:5000`
 
