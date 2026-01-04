@@ -1,105 +1,111 @@
-# Image Slice Restorer & Enhancer (图像切片还原与增强工具)
+# 🖼️ 图片加密分割 & 无损还原工具 (Visual Cryptography Tool)
 
-[![Python Version](https://img.shields.io/badge/python-3.7%2B-blue.svg)](https://www.python.org/)
-[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
+[![Python](https://img.shields.io/badge/Python-3.8%2B-blue)](https://www.python.org/)
+[![Flask](https://img.shields.io/badge/Flask-2.0%2B-green)](https://flask.palletsprojects.com/)
+[![License](https://img.shields.io/badge/license-MIT-yellow)](LICENSE)
 
-一个功能强大的 Python 脚本，用于将一个目录下的多个图像“切片”或“碎片”~~无损地~~拼接还原成完整的原始图像。该脚本具有极高的鲁棒性，能够自动处理多种常见问题，并提供图像增强选项。
+这是一个基于 Python Flask 和 Pillow (PIL) 开发的 Web 应用程序，实现了**视觉加密 (Visual Cryptography)** 的概念。
 
-This is a powerful Python script designed to lossy restore a complete, original image from a directory of image "slices" or "fragments." The script is highly robust, automatically handling a variety of common issues and providing options for post-enhancement.
+该工具可以将一张原始图片分割（加密）成多个看似杂乱无章的切片，只有将这些切片叠加在一起时，才能还原（解密）出原始图像。它非常适合用于演示图像处理算法、视觉混淆技术或作为趣味性的数据隐藏工具。
 
-## ✨ 功能特性 (Features)
+## ✨ 主要功能
 
--  **无（有）损拼接 (Lossy Restoration)**: 通过像素级替换，~~100% 还原原始图像的每一个细节，无任何质量损失。~~
--   **鲁棒性强 (Highly Robust)**:
-    -   **处理混合背景**: 能够正确处理背景为纯黑 (`#000000`) 或纯白 (`#FFFFFF`) 的混合切片。
-    -   **自动模式转换**: 自动将不同模式（如 `P` 模式/调色板模式）的图片统一转换为 `RGB` 模式进行处理。
-    -   **自动尺寸校正**: 能够自动处理有 1-2 像素微小尺寸差异的图片，将其高质量地调整为基准尺寸，而不会跳过。
--   **多种输出 (Multiple Outputs)**: 一次运行，生成三个有用的图像版本：
-    1.  **还原图 (`_restored.png`)**: ~~完美~~拼接的原始图像。
-    2.  **反色图 (`_inverted.png`)**: 还原图的反色版本。
-    3.  **增强图 (`_enhanced.png`)**: 对还原图进行锐化和对比度增强，使其在视觉上更清晰。
--   **易于配置 (Easy to Configure)**: 增强效果（锐化度、对比度等）的参数可以在脚本中轻松调整。
+### 🔐 图片分割 (加密)
+将上传的图片通过算法分割成多个层（切片），支持多种分割模式以应对不同的混淆需求：
 
-## 🔧 环境要求 (Prerequisites)
+*   **🧱 块状模式 (Block Mode)**：推荐模式。将图片分成方块区域，每个方块整体分配给一个切片，单张切片难以识别内容。
+*   **🧩 拼图模式 (Jigsaw Mode)**：将图片分割成较大的拼图块，更加离散。
+*   **🔬 像素模式 (Pixel Mode)**：按单个像素随机分配，生成的切片像噪点图。
+*   **📊 条纹模式 (Stripe Mode)**：按水平或垂直条纹进行“碎纸机”式分割。
+*   **✨ 散点模式 (Scatter Mode)**：将像素分组后随机打散。
+*   **📐 网格模式 (Grid Mode)**：均匀的网格分配。
 
--   Python 3.7 或更高版本
--   Pillow (Python Imaging Library)
+**高级选项：**
+*   **🔄 反色处理**：在分割前自动反转图片颜色，增加还原难度（还原时需再次反色）。
+*   **🎛️ 参数自定义**：支持自定义切片数量（2-100）、块大小、背景颜色（黑/白）。
+*   **🎲 噪声注入**：向切片的空白区域添加随机噪声，防止通过透明度轻易还原。
+*   **🔢 随机种子**：支持固定随机种子，以便复现分割结果。
 
+### 🔧 图片还原 (解密)
+上传之前生成的切片文件，工具将尝试无损还原原图：
 
+*   **无损叠加**：基于像素级的叠加逻辑，自动处理透明背景。
+*   **自动尺寸适配**：自动统一不同尺寸的切片到基准尺寸。
+*   **智能后处理**：
+    *   **自动增强**：提供锐化（Unsharp Mask）和对比度调整功能，使还原的图片更清晰。
+    *   **反色生成**：自动生成一张“反色版”还原图，以应对加密时开启了反色选项的情况。
 
-## 🚀 使用方法 (Usage)
+## 🚀 快速开始
 
-1.  **准备文件结构**
+### 1. 环境要求
+确保您的系统中已安装 Python 3.8 或更高版本。
 
-    将您的所有图像切片文件放入一个文件夹（例如 `sub_images`）。然后将主脚本 `p_robust_final.py` 放在该文件夹的外部。
+### 2. 克隆项目
+```bash
+git clone https://github.com/your-username/image-splitter-tool.git
+cd image-splitter-tool
+```
 
-    ```
-    my_project/
-    ├── p.py       # <-- 主脚本
-    └── sub_images/             # <-- 存放图像切片的文件夹
-        ├── slice_1.png
-        ├── slice_2.png
-        ├── slice_3.png
-        └── ...
-    ```
+### 3. 安装依赖
+本项目主要依赖 Flask 和 Pillow。
+```bash
+pip install flask pillow
+```
 
-2.  **配置脚本参数**
+### 4. 运行应用
+```bash
+python app.py
+```
 
-    打开 `p.py` 文件，找到文件底部的 `if __name__ == "__main__":` 部分。您可以根据需要修改以下参数：
+### 5. 访问工具
+打开浏览器并访问：
+`http://127.0.0.1:5000`
 
-    ```python
-    if __name__ == "__main__":
-        # 输入文件夹：包含图像切片的目录
-        input_folder = 'sub_images'
-        
-        # 输出文件的基础名称，脚本会自动添加后缀
-        output_base_file = 'my_final_image.png'
+## 📖 使用指南
 
-        # --- 增强选项 ---
-        generate_all_versions_robust(
-            input_folder,
-            output_base_file,
-            enhance=True,  # 设置为 False 可以跳过生成增强图
-            
-            # 锐化半径：影响锐化的范围，建议 1.0-2.0
-            sharpen_radius=1.5,
-            
-            # 锐化强度：百分比，建议 100-200
-            sharpen_percent=150,
-            
-            # 对比度因子：大于1.0增强，1.0为不变
-            contrast_factor=1.1
-        )
-    ```
+### 第一步：分割加密
+1.  点击 **"分割加密"** 标签页。
+2.  拖拽或点击上传一张图片。
+3.  在右侧选择 **分割模式**（例如：块状模式）。
+4.  调整 **切片数量** 和 **块大小**。
+5.  （可选）勾选 **"分割前反色处理"** 或增加 **噪声级别**。
+6.  点击 **"开始分割加密"**。
+7.  下载生成的切片图片，或点击 **"下载全部 (ZIP)"**。
 
-3.  **运行脚本**
+### 第二步：无损还原
+1.  点击 **"无损还原"** 标签页。
+2.  同时选中并上传之前生成的**所有**切片文件。
+3.  （可选）调整 **增强效果**、**锐化半径** 等参数优化画质。
+4.  点击 **"开始还原"**。
+5.  查看结果：
+    *   `_原图.png`: 直接叠加的结果。
+    *   `_反色.png`: 如果加密时开启了反色，请查看此图。
+    *   `_增强.png`: 经过锐化和对比度调整的图片。
 
-    在您的终端或命令行中，导航到项目目录并运行脚本：
+## 📂 项目结构
 
-    ```bash
-    python p.py
-    ```
+```text
+.
+├── app.py              # Flask 后端核心逻辑
+├── static/
+│   └── index.html      # 前端单页应用 (包含 JS/CSS)
+├── uploads/            # 临时上传目录 (会自动清理)
+└── outputs/            # 临时输出目录 (会自动清理)
+```
 
-## 🖼️ 输出结果 (Output)
+## ⚙️ 配置说明
 
-脚本运行成功后，您将在项目根目录下看到生成的新文件：
+在 `app.py` 文件顶部，你可以修改以下全局配置：
 
--   `image_restored.png`: ~~无损~~还原的原始图像。
--   `image_inverted.png`: 原图的反色版本。
--   `image_enhanced.png`: 经过锐化和对比度增强的版本，视觉上更清晰。
+```python
+UPLOAD_FOLDER = 'uploads'        # 上传文件夹路径
+OUTPUT_FOLDER = 'outputs'        # 输出文件夹路径
+SESSION_LIFETIME_SECONDS = 3600  # 临时文件保留时间 (秒)
+CLEANUP_INTERVAL_SECONDS = 1800  # 清理任务运行间隔 (秒)
+```
 
-## 🔬 工作原理 (How It Works)
+## 🤝 贡献
+欢迎提交 Pull Request 或 Issue！如果您有新的分割算法想法或界面优化建议，请随时提出。
 
-1.  **初始化**: 脚本首先读取第一张图片以确定基准尺寸，然后创建一个与基准尺寸相同的纯黑色画布。
-2.  **遍历与标准化**: 脚本会遍历输入目录中的每一张图片。
-    -   它会检查每张图片的尺寸，如果与基准尺寸有微小差异，则自动将其调整为基准尺寸。
-    -   它会将每张图片的模式统一转换为 `RGB` 模式，以确保兼容性。
-3.  **像素级拼接**: 对于当前图片中的每一个像素，脚本会判断其颜色。**只有当像素颜色既不是纯黑也不是纯白时**，才将其视为有效内容，并复制到画布的相应位置上。
-4.  **后处理与保存**: 拼接完成后，脚本会基于最终的画布生成并保存还原图、反色图和（可选的）增强图。
-
-## 📄 许可证 (License)
-
-本项目采用 [Apache-2.0 license](LICENSE.md) 授权。
-
-
+## 📄 开源协议
+本项目采用 [MIT License](LICENSE) 开源协议。
